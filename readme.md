@@ -56,3 +56,13 @@ Researchers found out that Mamba architecture as a stand alone architecture unde
 
 
 ![title](imgs/Architecture.png)
+
+## Jamba Architecture
+
+State - represents the internal memory that stores relevant past information that help to predict future outputs.
+
+State based models use compression to store a fixed size state representation (same as RNN).
+
+Structured State Space Models (s4) - imposes a specific structure on the model's parameters and process the states through linear operations.
+
+![title](imgs/SSM.png)

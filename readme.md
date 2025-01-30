@@ -66,3 +66,53 @@ State based models use compression to store a fixed size state representation (s
 Structured State Space Models (s4) - imposes a specific structure on the model's parameters and process the states through linear operations.
 
 ![title](imgs/SSM.png)
+
+### Inferencing 
+
+![title](imgs/S4%20inferencing.png)
+
+A (bar), B (bar) and C are the model parameters used at every step to generate an output token. Given current token x{t} model combines linearly the previosu state h{t-1} and x{t} using A(bar) and B(bar)
+to update the current state h{t}. 
+
+A(bar) helps to decide what to forget and waht to remember from previous state and B(bar) helps to decide what to remember from current input.
+
+After updating the current state model uses C to map the h{t} to output token meaning to decide what should be the output token.
+
+A(bar) and B(bar) depends on Delta which helps to decide balance between previous and new information.
+
+Limitations:
+
+* While S4 models have higher training, inference and memory efficiency, the output efficiency still lags behind to that of a transformer.
+This is because the state in S4 models are independent of the input.
+
+Selective S4 models makes the model parameters dependent on input. This is called Mamba.
+
+
+![title](imgs/Mamba.png)
+
+Limitations of Mamba:
+
+* Falls short when careful handling of specific tokens is required. It falls short in predicting repeatative sequence of tokens.
+
+Meaning:
+
+transformer excels at predicting label (say either positive or negitive).
+But Mamba, while predicts the correct intent it will predict non existing label (mamba says bad instead of Negative).
+
+
+### Jamba architecture
+
+![title](imgs/Jamba_Architecture.png)
+
+In order to bring the best of both worlds while mtitigating the drawbacks, Jamba was introduced.
+
+JAMBA stands for Joint attention and Mamba.
+
+Apart from Attention and Mamba layers the architecture has a new layer called 'Mixture of Experts(MoE)'. This allows us to use only a portion of model weights on input token chosen as per the router.
+
+According to the paper, balancing of attention layers and mamba layers is key. The paper suggests to have 1 layer of Attention layer and 7 Mamba layers to have high throughput and high efficient memory footprint.
+
+![title](imgs/Jamba_performance.png)
+
+
+
